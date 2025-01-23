@@ -27,8 +27,12 @@ process_metadata <- function(metadata_path, outPath) {
     mutate(fullSilvataxonomy = paste(Kingdom, Phylum, Class, Order, Family, sep = "."))
   
   KCHpalette_filtered <- KCHpalette %>%
-    filter(taxa %in% sort(unique(metadata$fullSilvataxonomy))) %>%
-    mutate(taxashort = ifelse(taxashort == "", gsub(".*\\.", "", taxa), taxashort))
+    mutate(taxashort = ifelse(taxashort == "", gsub(".*\\.", "", taxa), taxashort)) %>%
+    filter(taxashort %in% sort(unique(metadata$Family)))
+
+# Previous code chunk.  
+#  %>%
+#    filter(taxa %in% sort(unique(metadata$fullSilvataxonomy))) 
   
   # Make a named list
   KCHpalette_filtered_vector <- KCHpalette_filtered$hex
