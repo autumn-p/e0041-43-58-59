@@ -8,13 +8,16 @@ library(gridExtra)
 
 # Set up file paths
 outPath = "analysis/20241006_StackingBarPlots/out" # out
+datae0041meta_path = "analysis/09102024_ModifyingMetaDataTables/out/datae0041meta.txt" #e0041 metadata file
 datae0058meta_path = "analysis/09102024_ModifyingMetaDataTables/out/datae0058meta.txt" #e0058 metadata file
 datae0059meta_path = "analysis/09102024_ModifyingMetaDataTables/out/datae0059meta.txt" #e0059 metadata file
 
 
 # Read in palettes and metadata tables
+KCHpalettee0041vector <- readRDS("analysis/20241005_GeneratingColorPallete/out/KCHpalette_vector_e0041.rds") #e0041 color palette
 KCHpalettee0058vector <- readRDS("analysis/20241005_GeneratingColorPallete/out/KCHpalette_vector_e0058.rds") #e0058 color palette
 KCHpalettee0059vector <- readRDS("analysis/20241005_GeneratingColorPallete/out/KCHpalette_vector_e0059.rds") #e0059 color palette
+datae0041meta <- read.table(datae0041meta_path, header = TRUE, stringsAsFactors = FALSE)
 datae0058meta <- read.table(datae0058meta_path, header = TRUE, stringsAsFactors = FALSE)
 datae0059meta <- read.table(datae0059meta_path, header = TRUE, stringsAsFactors = FALSE)
 
@@ -36,6 +39,9 @@ create_stacked_bar_plot <- function(data, palette_vector, facet_vars, output_fil
   
   return(plot)
 }
+
+# Create and save e0041 stacked bar plot
+create_stacked_bar_plot(datae0041meta, KCHpalettee0041vector, "well + recipient", "e0041communityAbundanceBarByCommunity.png", "Recipient", "Relative Abundance", "Distribution of Family Relative Abundance by Well")
 
 # Create and save e0058 stacked bar plot
 create_stacked_bar_plot(datae0058meta, KCHpalettee0058vector, "well + recipient", "e0058communityAbundanceBarByCommunity.png", "Recipient", "Relative Abundance", "Distribution of Family Relative Abundance by Well")

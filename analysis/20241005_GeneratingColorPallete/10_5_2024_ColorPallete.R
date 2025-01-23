@@ -7,9 +7,10 @@ library(patchwork)
 library(gridExtra)
 
 # Set up file paths
-outPath = "analysis/out" # out
+outPath = "analysis/20241005_GeneratingColorPallete/out" # out
 referenceASV = "config/referenceASVs-e0026.txt" #reference ASVs
 KCHpalette_path = "config/KCHcolors-Silva-partial.txt" #color palette
+datae0041meta = "analysis/09102024_ModifyingMetaDataTables/out/datae0041meta.txt"
 datae0058meta = "analysis/out/datae0058meta.txt" #metadata e0058
 datae0059meta = "analysis/out/datae0059meta.txt" #metadata e0059
 
@@ -41,10 +42,15 @@ process_metadata <- function(metadata_path, outPath) {
 }
 
 # Process both datasets
+results_e0041 <- process_metadata(datae0041meta, outPath)
 results_e0058 <- process_metadata(datae0058meta, outPath)
 results_e0059 <- process_metadata(datae0059meta, outPath)
 
 # Save Palette Vectors:
+#e0041
+metadata_e0041 <- results_e0041$metadata
+KCHpalette_vector_e0041 <- results_e0041$palette_vector
+saveRDS(KCHpalette_vector_e0041, file = paste0(outPath, "/KCHpalette_vector_e0041.rds"))
 #e0058
 metadata_e0058 <- results_e0058$metadata
 KCHpalette_vector_e0058 <- results_e0058$palette_vector
